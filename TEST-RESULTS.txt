@@ -1,0 +1,6 @@
+LOCAL CHECK RESULTS
+- Static HTTP server served index.html successfully (HTTP 200).
+- CSS, JavaScript, and generated resume PDF returned HTTP 200.
+- JavaScript syntax is checked separately with `node --check js/main.js`.
+- Personal portrait, Nexora logo, and intro video are referenced by the source but were not supplied as actual files; see ASSETS-TO-ADD.txt.
+- Visual review still needs to be performed in your own VS Code browser, especially for layout and external CDN loading.

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-labelledby="title desc">
+<title id="title">Ashutosh Dubey — Java Full Stack Architect</title>
+<desc id="desc">Animated dark navy and electric blue banner with a moving grid and glowing accents.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07111f"/><stop offset=".55" stop-color="#101d36"/><stop offset="1" stop-color="#07111f"/></linearGradient>
+  <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#38bdf8" stop-opacity="0"/><stop offset=".5" stop-color="#38bdf8"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></linearGradient>
+  <pattern id="grid" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0H0V38" fill="none" stroke="#60a5fa" stroke-opacity=".12" stroke-width="1"/></pattern>
+  <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1200" height="340" rx="22" fill="url(#bg)"/>
+<rect width="1200" height="340" rx="22" fill="url(#grid)"/>
+<g opacity=".55" fill="none" stroke="#38bdf8" stroke-width="1.5">
+ <path d="M-40 280 C180 200 230 350 450 255 S790 180 1240 255"><animate attributeName="stroke-dasharray" values="0 1600;500 1100;0 1600" dur="8s" repeatCount="indefinite"/></path>
+ <path d="M-20 300 C200 220 300 360 510 275 S850 205 1230 275" stroke="#a78bfa"><animate attributeName="stroke-dashoffset" values="0;-700" dur="12s" repeatCount="indefinite"/></path>
+</g>
+<circle cx="1010" cy="65" r="100" fill="#2563eb" opacity=".08"><animate attributeName="r" values="90;125;90" dur="6s" repeatCount="indefinite"/></circle>
+<circle cx="1010" cy="65" r="66" fill="none" stroke="#38bdf8" stroke-opacity=".35"><animate attributeName="r" values="50;78;50" dur="5s" repeatCount="indefinite"/></circle>
+<path d="M960 65h100M1010 15v100" stroke="#38bdf8" stroke-opacity=".35"/>
+<g font-family="ui-monospace,SFMono-Regular,Menlo,monospace">
+ <text x="70" y="72" fill="#7dd3fc" font-size="16" letter-spacing="5">PORTFOLIO / ENGINEERING PROFILE</text>
+ <text x="66" y="142" fill="#f8fafc" font-size="49" font-weight="800">ASHUTOSH DUBEY</text>
+ <rect x="70" y="166" width="420" height="3" rx="1.5" fill="url(#line)"/>
+ <text x="70" y="207" fill="#38bdf8" font-size="24" font-weight="700">JAVA FULL STACK ARCHITECT</text>
+ <text x="70" y="244" fill="#cbd5e1" font-size="17">Enterprise Backend Developer</text>
+ <text x="70" y="271" fill="#cbd5e1" font-size="17">&amp; Distributed Systems Engineer</text>
+ <text x="70" y="312" fill="#64748b" font-size="12" letter-spacing="3">JAVA  /  SPRING BOOT  /  REACT  /  SYSTEMS</text>
+</g>
+<circle cx="1120" cy="285" r="3" fill="#38bdf8" filter="url(#glow)"><animate attributeName="opacity" values=".2;1;.2" dur="2s" repeatCount="indefinite"/></circle>
+<circle cx="1070" cy="250" r="2" fill="#a78bfa"><animate attributeName="opacity" values="1;.2;1" dur="3s" repeatCount="indefinite"/></circle>
+</svg>

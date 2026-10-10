@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ashutosh Dubey | Java Full Stack Architect & Universe</title>
+
+    <!-- Tailwind CSS -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+
+        tailwind.config = {
+
+            darkMode: 'class',
+
+            theme: {
+
+                extend: {
+
+                    fontFamily: {
+
+                        sans: ['Outfit', 'sans-serif'],
+
+                        display: ['Space Grotesk', 'sans-serif'],
+
+                        mono: ['JetBrains Mono', 'monospace'],
+
+                        cyber: ['Syncopate', 'sans-serif'],
+
+                    },
+
+                    colors: {
+
+                        void: '#030307',
+
+                        space: '#0d0d1f',
+
+                        panel: '#15152f',
+
+                        neon: {
+
+                            purple: '#9d4edd',
+
+                            pink: '#f72585',
+
+                            cyan: '#4cc9f0',
+
+                            green: '#06d6a0',
+
+                            yellow: '#ffd166'
+
+                        }
+
+                    },
+
+                    animation: {
+
+                        'spin-slow': 'spin 20s linear infinite',
+
+                        'spin-reverse': 'spin-reverse 25s linear infinite',
+
+                        'float': 'float 6s ease-in-out infinite',
+
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite alternate',
+
+                    },
+
+                    keyframes: {
+
+                        float: {
+
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+
+                            '50%': { transform: 'translateY(-15px) rotate(1deg)' },
+
+                        },
+
+                        pulseGlow: {
+
+                            '0%': { opacity: '0.3', filter: 'blur(20px)' },
+
+                            '100%': { opacity: '0.8', filter: 'blur(45px)' }
+
+                        },
+
+                        'spin-reverse': {
+
+                            from: { transform: 'rotate(360deg)' },
+
+                            to: { transform: 'rotate(0deg)' }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body class="antialiased selection:bg-neon-purple/40 selection:text-white">
+
+    <!-- Cinematic Intro Video Overlay -->
+
+    <div id="intro-overlay">
+
+        <div class="absolute inset-0 bg-black/40 z-10 pointer-events-none"></div>
+
+        <div class="relative w-full h-full max-w-6xl max-h-[85vh] p-4 flex flex-col justify-center items-center z-20">
+
+            <div class="absolute top-8 right-8 z-30 flex items-center gap-4">
+
+                <button onclick="toggleAudio()" id="audioToggleBtn" class="px-5 py-2 rounded-full font-cyber text-xs font-bold bg-white/10 text-white hover:bg-neon-cyan hover:text-black transition-all border border-white/20 backdrop-blur-md flex items-center gap-2">
+
+                    <i class="fas fa-volume-mute" id="audioIcon"></i> <span id="audioText">UNMUTE AUDIO</span>
+
+                </button>
+
+                <button onclick="dismissIntro()" class="px-6 py-2 rounded-full font-cyber text-xs font-bold bg-white/10 text-white hover:bg-neon-pink hover:shadow-[0_0_20px_#f72585] transition-all border border-white/20 backdrop-blur-md flex items-center gap-2">
+
+                    SKIP INTRO <i class="fas fa-forward"></i>
+
+                </button>
+
+            </div>
+
+            <div class="w-full aspect-video rounded-2xl overflow-hidden border border-neon-cyan/40 shadow-[0_0_80px_rgba(76,201,240,0.4)] bg-black relative">
+
+                <video id="autoIntroVideo" class="w-full h-full object-cover" autoplay playsinline preload="auto">
+
+                    <source src="assets/video/Intro.mp4" type="video/mp4">
+
+                    Your browser does not support the video tag.
+
+                </video>
+
+            </div>
+
+            <div class="mt-6 text-center">
+
+                <p class="font-cyber text-neon-cyan tracking-[0.4em] text-xs uppercase animate-pulse">ASHUTOSH DUBEY // ENTERING CYBER UNIVERSE...</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+
+    <nav class="fixed w-full z-50 transition-all duration-500 py-4" id="navbar">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="glass-card px-6 py-4 flex items-center justify-between rounded-full bg-space/70 border border-neon-cyan/30">
+
+                <div class="flex-shrink-0 cursor-pointer flex items-center gap-3">
+
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-neon-purple to-neon-pink flex items-center justify-center shadow-[0_0_15px_#f72585]">
+
+                        <i class="fas fa-cube text-white text-lg"></i>
+
+                    </div>
+
+                    <span class="text-lg sm:text-xl font-bold font-cyber tracking-wider text-white">
+
+                        ASHUTOSH <span class="text-neon-cyan">></span>
+
+                    </span>
+
+                </div>
+
+                <div class="hidden md:block">
+
+                    <div class="flex items-baseline space-x-8 font-mono text-xs uppercase tracking-widest">
+
+                        <a href="#home" class="text-gray-300 hover:text-neon-cyan transition-colors px-2 py-1">Home</a>
+
+                        <a href="#skills" class="text-gray-300 hover:text-neon-pink transition-colors px-2 py-1">Skills</a>
+
+                        <a href="#projects" class="text-gray-300 hover:text-neon-purple transition-colors px-2 py-1">Projects</a>
+
+                        <a href="#experience" class="text-gray-300 hover:text-white transition-colors px-2 py-1">Logs</a>
+
+                        <a href="#contact" class="text-gray-300 hover:text-neon-green transition-colors px-2 py-1">Contact</a>
+
+                    </div>
+
+                </div>
+
+                <div class="hidden md:flex items-center gap-4">
+
+                    <a href="https://www.instagram.com/_ashutoshdubey0908_" target="_blank" class="w-10 h-10 rounded-full bg-panel border border-neon-pink/40 flex items-center justify-center text-neon-pink hover:bg-neon-pink hover:text-white transition-all shadow-[0_0_15px_rgba(247,37,133,0.3)]">
+
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+
+                    <button onclick="downloadResume()" class="relative group font-cyber text-xs font-bold bg-gradient-to-r from-neon-purple to-neon-pink text-white px-6 py-3 rounded-full hover:shadow-[0_0_25px_#9d4edd] transition-all transform hover:-translate-y-0.5">
+
+                        <span class="flex items-center gap-2"><i class="fas fa-download"></i> RESUME</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- Hero Section -->
+
+    <section id="home" class="min-h-screen flex items-center pt-32 pb-16 relative overflow-hidden">
+
+        <div class="absolute inset-0 hero-coding-backdrop pointer-events-none" aria-hidden="true">
+            <div class="hero-code-panel panel-a"><span>01</span> public class Developer {<br>&nbsp;&nbsp;@SpringBootApplication<br>&nbsp;&nbsp;public static void main(String[] args) {<br>&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Building the future");<br>&nbsp;&nbsp;}<br>}</div>
+            <div class="hero-code-panel panel-b"><span>02</span> const portfolio = {<br>&nbsp;&nbsp;name: "Ashutosh Dubey",<br>&nbsp;&nbsp;stack: ["Java", "React", "SQL"],<br>&nbsp;&nbsp;status: "Available"<br>};</div>
+            <div class="hero-grid-glow"></div>
+        </div>
+        <div class="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-neon-purple/15 rounded-full blur-[180px] pointer-events-none"></div>
+
+        <div class="absolute bottom-0 right-0 w-[700px] h-[700px] bg-neon-cyan/15 rounded-full blur-[180px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+
+            <!-- Left Side Details -->
+
+            <div class="space-y-6 relative">
+
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-card font-mono text-xs font-bold text-neon-green shadow-[0_0_20px_rgba(6,214,160,0.2)] border-neon-green/30">
+
+                    <i class="fas fa-circle-nodes animate-pulse"></i> STATUS: AVAILABLE FOR ARCHITECT ROLES
+
+                </div>
+
+                <div>
+
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold font-cyber leading-tight tracking-tighter text-white drop-shadow-[0_0_25px_rgba(157,78,221,0.5)]">
+
+                        ASHUTOSH <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink">DUBEY</span>
+
+                    </h1>
+
+                </div>
+
+                <h2 class="text-lg sm:text-xl font-mono text-neon-cyan tracking-wider">
+
+                    > JAVA FULL STACK ARCHITECT
+
+                </h2>
+
+                <p class="text-gray-200 text-base sm:text-lg max-w-xl leading-relaxed font-sans font-light border-l-4 border-neon-purple pl-5 py-3 hero-description">
+
+                    Java Full Stack Architect specializing in enterprise backend development, Spring Boot microservices, high-performance React architectures, and distributed systems.
+
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-4">
+
+                    <button onclick="downloadResume()" class="glow-border px-7 py-4 rounded-xl font-cyber font-bold text-white bg-space hover:bg-panel transition-all flex items-center gap-3 shadow-[0_0_20px_rgba(157,78,221,0.3)]">
+
+                        <i class="fas fa-download text-neon-cyan"></i> DOWNLOAD RESUME PDF
+
+                    </button>
+
+                    <a href="#projects" class="px-7 py-4 rounded-xl font-cyber font-bold text-neon-cyan bg-panel border border-neon-cyan/40 hover:bg-neon-cyan/10 transition-all flex items-center gap-3">
+
+                        <i class="fas fa-rocket"></i> EXPLORE PROJECTS
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Right Side Photo Cutout in Holographic Frame -->
+
+            <div class="flex flex-col items-center justify-center relative">
+
+                <div class="portrait-stage w-full max-w-[520px] relative group">
+                    <div class="code-rain" aria-hidden="true">
+                        <span>public class Developer {</span><span>SpringBootApplication</span><span>REST API · Java 21</span>
+                        <span>const portfolio = "Ashutosh";</span><span>git commit -m "build"</span><span>React · TypeScript · SQL</span>
+                        <span>@GetMapping("/projects")</span><span>while (learning) { build(); }</span><span>System.out.println("Hello");</span>
+                    </div>
+                    <div class="portrait-glow" aria-hidden="true"></div>
+                    <div class="portrait-label"><i class="fas fa-terminal"></i> ASHUTOSH_DUBEY.exe</div>
+                    <img src="assets/images/Professional-Suit-Portrait-Cutout.png" alt="Ashutosh Dubey" class="hero-cutout"
+                         onerror="this.style.display='none'; document.getElementById('portraitFallback').style.display='flex'">
+                    <div id="portraitFallback" class="portrait-fallback" style="display:none">Portrait file missing</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Skills Section (Orbital Skill Universe) -->
+
+    <section id="skills" class="py-32 relative border-t border-white/10 bg-gradient-to-b from-void via-space to-void overflow-hidden">
+
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+
+            <div class="text-center mb-24">
+
+                <h2 class="text-4xl md:text-5xl font-cyber font-bold text-white uppercase tracking-widest mb-4">Skill <span class="text-gradient-cyber">Universe</span></h2>
+
+                <p class="font-mono text-neon-cyan text-sm"><i class="fas fa-atom"></i> INTERACTIVE_ORBITAL_TECHNICAL_SYSTEM</p>
+
+            </div>
+
+            <div class="universe-container mt-8">
+
+                <div class="core font-mono text-xs text-center">
+
+                    <span class="text-neon-yellow">CORE</span><br/>JAVA
+
+                </div>
+
+                <div class="orbit orbit-1">
+
+                    <div class="planet text-2xl text-blue-400" title="React.js"><i class="fab fa-react"></i></div>
+
+                    <div class="planet text-2xl text-yellow-400" title="TypeScript"><i class="fab fa-js"></i></div>
+
+                    <div class="planet text-2xl text-cyan-400" title="Tailwind CSS"><i class="fas fa-paint-brush"></i></div>
+
+                </div>
+
+                <div class="orbit orbit-2">
+
+                    <div class="planet text-2xl text-neon-green" title="Spring Boot"><i class="fas fa-leaf"></i></div>
+
+                    <div class="planet text-2xl text-red-500" title="Java"><i class="fab fa-java"></i></div>
+
+                    <div class="planet text-2xl text-gray-300" title="Hibernate"><i class="fas fa-database"></i></div>
+
+                    <div class="planet text-2xl text-blue-500" title="REST APIs"><i class="fas fa-network-wired"></i></div>
+
+                    <div class="planet text-2xl text-yellow-500" title="JWT"><i class="fas fa-key"></i></div>
+
+                </div>
+
+                <div class="orbit orbit-3">
+
+                    <div class="planet text-2xl text-blue-300" title="MySQL"><i class="fas fa-server"></i></div>
+
+                    <div class="planet text-2xl text-neon-green" title="MongoDB"><i class="fas fa-envira"></i></div>
+
+                    <div class="planet text-2xl text-orange-500" title="AWS"><i class="fab fa-aws"></i></div>
+
+                    <div class="planet text-2xl text-blue-600" title="Docker"><i class="fab fa-docker"></i></div>
+
+                </div>
+
+            </div>
+
+            <div class="mt-28 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+
+                <div class="glass-card p-8 border-t-4 border-t-neon-cyan">
+
+                    <h3 class="font-cyber font-bold text-white mb-3 text-lg flex items-center gap-3"><i class="fas fa-code text-neon-cyan"></i> Frontend Architecture</h3>
+
+                    <p class="font-mono text-xs text-gray-300 leading-relaxed">React 19, TypeScript, Vite, Tailwind CSS, Redux Toolkit, dnd-kit for responsive state and drag-and-drop workflows.</p>
+
+                </div>
+
+                <div class="glass-card p-8 border-t-4 border-t-neon-purple">
+
+                    <h3 class="font-cyber font-bold text-white mb-3 text-lg flex items-center gap-3"><i class="fas fa-server text-neon-purple"></i> Backend & Microservices</h3>
+
+                    <p class="font-mono text-xs text-gray-300 leading-relaxed">Java 21, Spring Boot 3.5, Spring Data JPA, Hibernate ORM, RESTful APIs, JWT Authentication, and security filters.</p>
+
+                </div>
+
+                <div class="glass-card p-8 border-t-4 border-t-neon-pink">
+
+                    <h3 class="font-cyber font-bold text-white mb-3 text-lg flex items-center gap-3"><i class="fas fa-cloud text-neon-pink"></i> Databases & DevOps</h3>
+
+                    <p class="font-mono text-xs text-gray-300 leading-relaxed">MySQL 8, MongoDB, AWS (EC2, S3, Lambda), Docker containerization, Git version control, and Maven automation.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Projects Section -->
+
+    <section id="projects" class="py-32 relative bg-void border-t border-white/10">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="text-center mb-24">
+
+                <h2 class="text-4xl md:text-5xl font-cyber font-bold text-white uppercase tracking-widest mb-4">Master <span class="text-gradient-neon">Deployments</span></h2>
+
+                <p class="font-mono text-neon-purple text-sm"><i class="fas fa-rocket"></i> PRODUCTION_GRADE_ENTERPRISE_PLATFORMS</p>
+
+            </div>
+
+            <!-- NEXORA - FLAGSHIP HERO CARD -->
+
+            <div class="mb-24 relative group w-full">
+
+                <div class="absolute -inset-2 bg-gradient-to-r from-neon-purple via-neon-pink to-neon-cyan rounded-[2.5rem] blur-xl opacity-40 group-hover:opacity-75 transition duration-1000 animate-pulse-glow"></div>
+
+                <div class="glass-card rounded-[2rem] border-neon-pink/60 overflow-hidden grid lg:grid-cols-2 shadow-[0_0_60px_rgba(247,37,133,0.3)] bg-space/95 relative z-10">
+
+                    <div class="p-10 lg:p-14 flex flex-col justify-center">
+
+                        <div class="flex items-center gap-3 mb-6">
+
+                            <span class="px-3 py-1 text-xs font-mono font-bold uppercase tracking-wider text-white bg-gradient-to-r from-neon-pink to-neon-purple rounded-full shadow-[0_0_15px_#f72585]">FLAGSHIP PLATFORM</span>
+
+                            <span class="text-gray-400 text-sm font-mono"><i class="fas fa-crown text-yellow-400"></i> Social & Professional Ecosystem</span>
+
+                        </div>
+
+                        <div class="project-brandline"><img src="assets/images/projects/nexora.png" alt="Nexora logo" class="project-logo project-logo-wide"><span class="project-brand-caption">SOCIAL + PROFESSIONAL NETWORK</span></div>
+                        <h3 class="text-4xl lg:text-5xl font-cyber font-bold text-white mb-6 tracking-tight">NEXORA</h3>
+
+                        <p class="text-gray-300 leading-relaxed mb-8 font-sans text-lg">
+
+                            Full Social Media + Professional Networking Platform. Features communities, short-form video clips (Nexora Clips), messaging with WebRTC voice/video calls, and dual MySQL + MongoDB architecture.
+
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-10 font-mono text-xs">
+
+                            <span class="text-cyan-400 border border-cyan-400/30 px-3 py-1.5 rounded-lg bg-cyan-950/30">React.js</span>
+
+                            <span class="text-green-400 border border-green-400/30 px-3 py-1.5 rounded-lg bg-green-950/30">Spring Boot</span>
+
+                            <span class="text-purple-400 border border-purple-400/30 px-3 py-1.5 rounded-lg bg-purple-950/30">MySQL & MongoDB</span>
+
+                            <span class="text-pink-400 border border-pink-400/30 px-3 py-1.5 rounded-lg bg-pink-950/30">WebRTC</span>
+
+                        </div>
+
+                        <div class="flex gap-4">
+
+                            <a href="https://github.com/ashudubeyvns" target="_blank" class="px-8 py-4 rounded-xl bg-gradient-to-r from-neon-purple to-neon-pink text-white font-cyber font-bold shadow-[0_0_25px_rgba(247,37,133,0.5)] hover:shadow-[0_0_45px_rgba(247,37,133,0.8)] transition-all flex items-center gap-2">
+
+                                <i class="fab fa-github"></i> VIEW NEXORA REPO
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="relative min-h-[320px] lg:h-auto bg-black flex items-center justify-center p-8 overflow-hidden">
+
+                        <div class="absolute inset-0 bg-[radial-gradient(#9d4edd_1px,transparent_1px)] [background-size:24px_24px] opacity-30"></div>
+
+                        <img src="assets/images/projects/nexora.png" alt="Nexora Logo" class="relative z-10 w-full max-w-lg object-contain drop-shadow-[0_0_50px_rgba(157,78,221,0.7)] hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x400/000/9d4edd?text=NEXORA'">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PROJECTS GRID -->
+
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <!-- TaskGenZ Project -->
+
+                <div class="glass-card p-8 group hover:-translate-y-2 border-t-4 border-t-neon-cyan">
+
+                    <div class="flex justify-between items-start mb-6">
+
+                        <div class="project-card-brand"><img src="assets/images/projects/taskgenz.png" alt="TaskGenZ project logo" class="project-logo-card"></div>
+
+                        <span class="text-xs font-mono text-neon-cyan bg-neon-cyan/10 px-3 py-1 rounded">Java Full Stack</span>
+
+                    </div>
+
+                    <h4 class="text-2xl font-cyber font-bold text-white mb-3">TaskGenZ Platform</h4>
+
+                    <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed font-sans">
+
+                        Modern Java Full Stack Project & Delivery Management Platform built with React, TypeScript, Spring Boot, MySQL, and MongoDB. Includes Kanban board, JWT auth, comments, and real-time analytics.
+
+                    </p>
+
+                    <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs">
+
+                        <span class="text-cyan-400 border border-cyan-400/30 px-2.5 py-1 rounded">Spring Boot 3.5</span>
+
+                        <span class="text-cyan-400 border border-cyan-400/30 px-2.5 py-1 rounded">React 19</span>
+
+                        <span class="text-cyan-400 border border-cyan-400/30 px-2.5 py-1 rounded">TypeScript</span>
+
+                        <span class="text-cyan-400 border border-cyan-400/30 px-2.5 py-1 rounded">MySQL + MongoDB</span>
+
+                    </div>
+
+                    <a href="https://github.com/ashudubeyvns" target="_blank" class="text-white hover:text-neon-cyan transition-colors flex items-center gap-2 text-sm font-bold font-mono">
+
+                        View Repository <i class="fab fa-github"></i>
+
+                    </a>
+
+                </div>
+
+                <!-- ERP College Management System -->
+
+                <div class="glass-card p-8 group hover:-translate-y-2 border-t-4 border-t-neon-purple">
+
+                    <div class="flex justify-between items-start mb-6">
+
+                        <div class="svg-logo-container">
+
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                <defs>
+
+                                    <linearGradient id="gradERP" x1="0%" y1="0%" x2="100%" y2="100%">
+
+                                        <stop offset="0%" stop-color="#9d4edd" />
+
+                                        <stop offset="100%" stop-color="#f72585" />
+
+                                    </linearGradient>
+
+                                </defs>
+
+                                <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3ZM12 12.8L4.34 8.66L12 4.52L19.66 8.66L12 12.8ZM4 12V18L12 22L20 18V12L12 16L4 12Z" fill="url(#gradERP)"/>
+
+                            </svg>
+
+                        </div>
+
+                        <a href="https://github.com/ashudubeyvns" target="_blank" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github text-2xl"></i></a>
+
+                    </div>
+                    <img src="assets/images/projects/college-erp.png" alt="College ERP Management System" class="project-showcase-image">
+                    <h4 class="text-2xl font-cyber font-bold text-white mb-3">ERP College System</h4>
+
+                    <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed font-sans">Full-stack Enterprise Resource Planning web application to automate academic workflows. Features role-based auth for Admin, Faculty, and Students, attendance tracking, and MySQL persistence.</p>
+
+                    <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs">
+
+                        <span class="text-purple-400 border border-purple-400/30 px-2.5 py-1 rounded">HTML/JS</span>
+
+                        <span class="text-purple-400 border border-purple-400/30 px-2.5 py-1 rounded">Bootstrap</span>
+
+                        <span class="text-purple-400 border border-purple-400/30 px-2.5 py-1 rounded">MySQL</span>
+
+                    </div>
+
+                    <a href="https://ashudubeyvns.github.io/ERP-Collage-management-system-main/" target="_blank" class="text-white hover:text-neon-purple transition-colors flex items-center gap-2 text-sm font-bold font-mono">
+
+                        View Live <i class="fas fa-external-link-alt"></i>
+
+                    </a>
+
+                </div>
+
+                <!-- BrainBrew -->
+
+                <div class="glass-card p-8 group hover:-translate-y-2 border-t-4 border-t-neon-yellow">
+
+                    <div class="flex justify-between items-start mb-6">
+
+                        <div class="svg-logo-container">
+
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                <defs>
+
+                                    <linearGradient id="gradBrew" x1="0%" y1="0%" x2="100%" y2="100%">
+
+                                        <stop offset="0%" stop-color="#ffd166" />
+
+                                        <stop offset="100%" stop-color="#f3722c" />
+
+                                    </linearGradient>
+
+                                </defs>
+
+                                <path d="M20 3H4V13C4 15.21 5.79 17 8 17H14C16.21 17 18 15.21 18 13V11H20C21.1 11 22 10.1 22 9V5C22 3.9 21.1 3 20 3ZM20 9H18V5H20V9ZM4 19H18V21H4V19Z" fill="url(#gradBrew)"/>
+
+                            </svg>
+
+                        </div>
+
+                        <a href="https://github.com/ashudubeyvns" target="_blank" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github text-2xl"></i></a>
+
+                    </div>
+                    <img src="assets/images/projects/brainbrew.png" alt="BrainBrew Café" class="project-showcase-image">
+                    <h4 class="text-2xl font-cyber font-bold text-white mb-3">BrainBrew Café</h4>
+
+                    <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed font-sans">Responsive café web application with modern user interface design, interactive frontend features using JavaScript, and optimized cross-device usability.</p>
+
+                    <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs">
+
+                        <span class="text-yellow-400 border border-yellow-400/30 px-2.5 py-1 rounded">JavaScript</span>
+
+                        <span class="text-yellow-400 border border-yellow-400/30 px-2.5 py-1 rounded">UI/UX</span>
+
+                    </div>
+
+                    <a href="https://ashudubeyvns.github.io/BrainBrew/" target="_blank" class="text-white hover:text-neon-yellow transition-colors flex items-center gap-2 text-sm font-bold font-mono">
+
+                        View Live <i class="fas fa-external-link-alt"></i>
+
+                    </a>
+
+                </div>
+
+                <!-- KidsApp -->
+
+                <div class="glass-card p-8 group hover:-translate-y-2 border-t-4 border-t-neon-green">
+
+                    <div class="flex justify-between items-start mb-6">
+
+                        <div class="svg-logo-container">
+
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                <defs>
+
+                                    <linearGradient id="gradKids" x1="0%" y1="0%" x2="100%" y2="100%">
+
+                                        <stop offset="0%" stop-color="#06d6a0" />
+
+                                        <stop offset="100%" stop-color="#118ab2" />
+
+                                    </linearGradient>
+
+                                </defs>
+
+                                <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" fill="url(#gradKids)"/>
+
+                            </svg>
+
+                        </div>
+
+                        <a href="https://github.com/ashudubeyvns" target="_blank" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github text-2xl"></i></a>
+
+                    </div>
+
+                    <img src="assets/images/projects/kidsapp.png" alt="KidsApp Android application" class="project-showcase-image">
+                    <h4 class="text-2xl font-cyber font-bold text-white mb-3">KidsApp Android</h4>
+
+                    <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed font-sans">Native Android learning application developed in Java with intuitive educational modules for children, emphasizing performance optimization and smooth navigation.</p>
+
+                    <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs">
+
+                        <span class="text-green-400 border border-green-400/30 px-2.5 py-1 rounded">Android Studio</span>
+
+                        <span class="text-green-400 border border-green-400/30 px-2.5 py-1 rounded">Java</span>
+
+                    </div>
+
+                    <a href="https://github.com/ashudubeyvns" target="_blank" class="text-white hover:text-neon-green transition-colors flex items-center gap-2 text-sm font-bold font-mono">
+
+                        Source Code <i class="fas fa-code-branch"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Experience & Internships Section -->
+
+    <section id="experience" class="py-32 relative bg-space border-t border-white/10 overflow-hidden">
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="text-center mb-24">
+
+                <h2 class="text-4xl md:text-5xl font-cyber font-bold text-white uppercase tracking-widest mb-4">System <span class="text-gradient-neon">Logs</span></h2>
+
+                <p class="font-mono text-neon-pink text-sm"><i class="fas fa-timeline"></i> PROFESSIONAL_EXPERIENCE_&_ACADEMICS</p>
+
+            </div>
+
+            <div class="relative pl-8 md:pl-0">
+
+                <div class="absolute left-[20px] md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-1 bg-void border-l border-r border-white/10 z-0"></div>
+
+                <div class="absolute left-[20px] md:left-1/2 md:-translate-x-1/2 top-0 w-1 bg-gradient-to-b from-neon-cyan via-neon-purple to-neon-pink z-10 shadow-[0_0_20px_#f72585] transition-all duration-700 ease-out h-0" id="timeline-progress"></div>
+
+                <div class="space-y-20">
+
+                    <!-- AICTE EduSkills -->
+
+                    <div class="relative z-20 md:w-1/2 md:pr-16 md:ml-0 group">
+
+                        <div class="absolute left-[-29px] md:right-[-52px] md:left-auto top-6 w-6 h-6 bg-void border-4 border-neon-cyan rounded-sm rotate-45 z-20 group-hover:bg-neon-cyan group-hover:scale-125 group-hover:shadow-[0_0_25px_#4cc9f0] transition-all duration-300"></div>
+
+                        <div class="glass-card p-8 border-l-4 border-l-neon-cyan transform group-hover:-translate-y-2">
+
+                            <span class="text-xs font-mono text-neon-cyan mb-3 inline-block bg-neon-cyan/10 px-3 py-1 rounded">July 2025 - Sept 2025</span>
+
+                            <h4 class="text-2xl font-cyber font-bold text-white mb-1">Java Full Stack Developer Virtual Intern</h4>
+
+                            <h5 class="text-gray-400 font-sans mb-4">AICTE EduSkills</h5>
+
+                            <ul class="space-y-2 text-sm text-gray-300 font-sans list-none">
+
+                                <li><span class="text-neon-cyan mr-2">></span>Developed backend modules using Java, Spring Boot, Spring Data JPA, and Hibernate.</li>
+
+                                <li><span class="text-neon-cyan mr-2">></span>Built RESTful APIs for CRUD operations and integrated MySQL databases.</li>
+
+                                <li><span class="text-neon-cyan mr-2">></span>Containerized applications using Docker and implemented Maven automation.</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Wipro TalentNext -->
+
+                    <div class="relative z-20 md:w-1/2 md:pl-16 md:ml-auto group">
+
+                        <div class="absolute left-[-29px] md:left-[-12px] top-6 w-6 h-6 bg-void border-4 border-neon-pink rounded-sm rotate-45 z-20 group-hover:bg-neon-pink group-hover:scale-125 group-hover:shadow-[0_0_25px_#f72585] transition-all duration-300"></div>
+
+                        <div class="glass-card p-8 border-l-4 border-l-neon-pink transform group-hover:-translate-y-2">
+
+                            <span class="text-xs font-mono text-neon-pink mb-3 inline-block bg-neon-pink/10 px-3 py-1 rounded">Industry Certification Training</span>
+
+                            <h4 class="text-2xl font-cyber font-bold text-white mb-1">Java Full Stack Training</h4>
+
+                            <h5 class="text-gray-400 font-sans mb-4">TalentNext (Wipro)</h5>
+
+                            <ul class="space-y-2 text-sm text-gray-300 font-sans list-none">
+
+                                <li><span class="text-neon-pink mr-2">></span>Completed industry-oriented training in Core/Advanced Java, Spring Boot, and REST APIs.</li>
+
+                                <li><span class="text-neon-pink mr-2">></span>Built hands-on full-stack projects using React.js and Spring Boot.</li>
+
+                                <li><span class="text-neon-pink mr-2">></span>Practiced Agile methodologies with Git, Postman, and Maven.</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MCA -->
+
+                    <div class="relative z-20 md:w-1/2 md:pr-16 md:ml-0 group">
+
+                        <div class="absolute left-[-29px] md:right-[-52px] md:left-auto top-6 w-6 h-6 bg-void border-4 border-neon-purple rounded-sm rotate-45 z-20 group-hover:bg-neon-purple group-hover:scale-125 group-hover:shadow-[0_0_25px_#9d4edd] transition-all duration-300"></div>
+
+                        <div class="glass-card p-8 border-l-4 border-l-neon-purple transform group-hover:-translate-y-2">
+
+                            <span class="text-xs font-mono text-neon-purple mb-3 inline-block bg-neon-purple/10 px-3 py-1 rounded">2024 - 2026</span>
+
+                            <h4 class="text-2xl font-cyber font-bold text-white mb-1">Master of Computer Applications (MCA)</h4>
+
+                            <h5 class="text-gray-400 font-sans mb-4">Galgotias University</h5>
+
+                            <div class="inline-block px-4 py-2 bg-black/50 border border-white/10 rounded font-mono">
+
+                                GPA: <span class="text-neon-purple font-bold">8.50</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- BCA -->
+
+                    <div class="relative z-20 md:w-1/2 md:pl-16 md:ml-auto group">
+
+                        <div class="absolute left-[-29px] md:left-[-12px] top-6 w-6 h-6 bg-void border-4 border-neon-green rounded-sm rotate-45 z-20 group-hover:bg-neon-green group-hover:scale-125 group-hover:shadow-[0_0_25px_#06d6a0] transition-all duration-300"></div>
+
+                        <div class="glass-card p-8 border-l-4 border-l-neon-green transform group-hover:-translate-y-2">
+
+                            <span class="text-xs font-mono text-neon-green mb-3 inline-block bg-neon-green/10 px-3 py-1 rounded">2021 - 2024</span>
+
+                            <h4 class="text-2xl font-cyber font-bold text-white mb-1">Bachelor of Computer Applications (BCA)</h4>
+
+                            <h5 class="text-gray-400 font-sans mb-4">Global Group of Institutes</h5>
+
+                            <div class="inline-block px-4 py-2 bg-black/50 border border-white/10 rounded font-mono mb-4">
+
+                                GPA: <span class="text-neon-green font-bold">8.70</span>
+
+                            </div>
+
+                            <div class="pt-4 border-t border-white/10 text-sm text-gray-300 font-sans">
+
+                                <p><i class="fas fa-trophy text-yellow-400 mr-2"></i> 1st Position: Code Debugging Competition (Khalsa College, Amritsar)</p>
+
+                                <p class="mt-2"><i class="fas fa-medal text-gray-300 mr-2"></i> 2nd Position: Website Building Competition (Global Group of Institutes, Gurdaspur)</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Contact Form Section -->
+
+    <section id="contact" class="py-32 relative bg-void border-t border-white/10">
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="text-center mb-16">
+
+                <h2 class="text-4xl md:text-5xl font-cyber font-bold text-white uppercase tracking-widest mb-4">Direct <span class="text-gradient-cyber">Transmission</span></h2>
+
+                <p class="font-mono text-neon-cyan text-sm"><i class="fas fa-envelope"></i> SEND A MESSAGE DIRECTLY TO ashutoshdubeyvns@gmail.com</p>
+
+            </div>
+
+            <div class="glass-card p-8 sm:p-12 border-neon-cyan/40">
+
+                <form action="https://formspree.io/f/ashutoshdubeyvns@gmail.com" method="POST" class="space-y-6">
+
+                    <div class="grid sm:grid-cols-2 gap-6">
+
+                        <div>
+
+                            <label class="block font-mono text-xs text-neon-cyan mb-2">YOUR NAME</label>
+
+                            <input type="text" name="name" required class="w-full bg-space border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition-colors font-sans" placeholder="John Doe">
+
+                        </div>
+
+                        <div>
+
+                            <label class="block font-mono text-xs text-neon-cyan mb-2">YOUR EMAIL</label>
+
+                            <input type="email" name="email" required class="w-full bg-space border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition-colors font-sans" placeholder="john@example.com">
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <label class="block font-mono text-xs text-neon-cyan mb-2">SUBJECT / QUERY</label>
+
+                        <input type="text" name="subject" required class="w-full bg-space border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition-colors font-sans" placeholder="Java Full Stack Architect Opportunity">
+
+                    </div>
+
+                    <div>
+
+                        <label class="block font-mono text-xs text-neon-cyan mb-2">MESSAGE</label>
+
+                        <textarea name="message" rows="5" required class="w-full bg-space border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition-colors font-sans" placeholder="Write your message here..."></textarea>
+
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-xl font-cyber font-bold text-white bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink shadow-[0_0_25px_rgba(76,201,240,0.4)] hover:shadow-[0_0_40px_rgba(157,78,221,0.7)] transition-all">
+
+                        TRANSMIT MESSAGE TO INBOX 🚀
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+
+    <footer class="py-16 bg-void relative border-t border-white/10 text-center">
+
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+
+            <h2 class="text-3xl font-cyber font-bold mb-6 text-white tracking-widest uppercase">Terminate Session.</h2>
+
+            <p class="text-gray-400 mb-8 font-sans">Ready to contribute to enterprise Java full-stack engineering & architecture teams.</p>
+
+            <div class="flex justify-center gap-6 mb-12">
+
+                <a href="mailto:ashutoshdubeyvns@gmail.com" class="glow-border px-8 py-4 rounded-xl font-mono font-bold text-neon-cyan bg-panel hover:text-white transition-colors">
+
+                    CONTACT_ASHUTOSH
+
+                </a>
+
+            </div>
+
+            <div class="flex justify-center space-x-8 text-3xl text-gray-400 mb-8">
+
+                <a href="https://github.com/ashudubeyvns" target="_blank" class="hover:text-neon-cyan hover:scale-110 transition-transform"><i class="fab fa-github"></i></a>
+
+                <a href="https://linkedin.com" target="_blank" class="hover:text-neon-purple hover:scale-110 transition-transform"><i class="fab fa-linkedin"></i></a>
+
+                <a href="https://www.instagram.com/_ashutoshdubey0908_" target="_blank" class="hover:text-neon-pink hover:scale-110 transition-transform"><i class="fab fa-instagram"></i></a>
+
+            </div>
+
+            <p class="font-mono text-xs text-gray-500 border-t border-white/5 pt-8">
+
+                © <script>document.write(new Date().getFullYear())</script> Ashutosh Dubey. Engineered in Cyber-Space.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script src="js/main.js" defer></script>
+
+</body>
+
+</html>
