@@ -1,7 +1,0 @@
-ASSET STATUS
-- Portrait: assets/images/Professional-Suit-Portrait-Cutout.png
-- Resume PDF: assets/documents/Ashutosh_Dubey_Resume.pdf (uploaded original resume)
-- Intro video: assets/video/Intro.mp4 (converted from uploaded MOV; 18.4 seconds)
-- Project artwork/logo assets: assets/images/projects/
-  - nexora.png, taskgenz.png, college-erp.png, brainbrew.png, kidsapp.png
-  - hero-reference.png (provided visual reference)
